@@ -1,23 +1,7 @@
-// src/main.c
+#include "../include/auxiliary.h"
 #include "../include/rb_tree.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-static void print_node(RBTree *t, RBNode *n) {
-    if (n == t->nil)
-        printf("nil");
-    else
-        printf("%d(%s)", n->key, n->color == RED ? "R" : "B");
-}
-
-static void inorder_traverse(RBTree *t, RBNode *n) {
-    if (n == t->nil)
-        return;
-    inorder_traverse(t, n->left);
-    print_node(t, n);
-    printf(" ");
-    inorder_traverse(t, n->right);
-}
 
 int main(void) {
     RBTree *t = rb_tree_create();
@@ -41,6 +25,7 @@ int main(void) {
     x->color = RED;
     y->key = 2;
     y->color = RED;
+
     x->parent = t->nil;
     t->root = x;
     x->left = t->nil;
@@ -49,19 +34,17 @@ int main(void) {
     y->left = t->nil;
     y->right = t->nil;
 
-    printf("Before left_rotate  => root=%d\n", t->root->key);
+    printf("Before left_rotate  => root = %d\n", t->root->key);
     rb_tree_left_rotate(t, x);
-    printf(" After left_rotate  => root=%d\n\n", t->root->key);
+    printf(" After left_rotate  => root = %d\n\n", t->root->key);
 
-    printf("Before right_rotate => root=%d\n", t->root->key);
+    printf("Before right_rotate => root = %d\n", t->root->key);
     rb_tree_right_rotate(t, y);
-    printf(" After right_rotate => root=%d\n\n", t->root->key);
+    printf(" After right_rotate => root = %d\n\n", t->root->key);
 
     free(x);
     free(y);
-
-    // **RESET** the tree so root no longer points at freed memory
-    t->root = t->nil;
+    t->root = t->nil; // clear out dangling root
 
     // 2) Insertion Demo
     int keys[] = {10, 20, 30, 15, 25, 5};

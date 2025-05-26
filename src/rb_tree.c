@@ -216,3 +216,18 @@ static void rb_tree_insert_fixup(RBTree *t, RBNode *z) {
     // Ensure root is always black (Don't forget this! >_<)
     t->root->color = BLACK;
 }
+
+/**
+ * @brief Print a node(RBNode) in the Red-Black Tree.
+ *        Used for debugging purposes.
+ *
+ * @param t  The Red-Black Tree.
+ * @param n  The node to print.
+ */
+void rb_tree_print_node(RBTree *t, RBNode *n) {
+    if (n == t->nil) {
+        printf("nil");
+    } else {
+        printf("%d(%s)", n->key, n->color == RED ? "R" : "B");
+    }
+}

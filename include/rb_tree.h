@@ -2,6 +2,7 @@
 #ifndef RB_TREE_H
 #define RB_TREE_H
 
+#include <stdio.h>
 #include <stdlib.h>
 
 // == Red-Black Tree Data Structures ==
@@ -111,5 +112,15 @@ void rb_tree_right_rotate(RBTree *t, RBNode *y);
  * @param key  The integer key to insert.
  */
 void rb_tree_insert(RBTree *t, int key);
+
+/**
+ * @brief Print a node’s key and color to stdout.
+ *
+ * Prints “nil” if the node is the sentinel.
+ *
+ * @param t  The Red-Black Tree (for its nil sentinel).
+ * @param n  The node to print.
+ */
+void rb_tree_print_node(RBTree *t, RBNode *n);
 
 #endif // RB_TREE_H

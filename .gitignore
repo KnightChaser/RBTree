@@ -1,4 +1,4 @@
 # object file
-src/*.o
+build/
 # compiled binary
 rbtree

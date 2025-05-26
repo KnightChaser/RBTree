@@ -1,0 +1,4 @@
+# object file
+src/*.o
+# compiled binary
+rbtree

@@ -100,4 +100,16 @@ void rb_tree_left_rotate(RBTree *t, RBNode *x);
  */
 void rb_tree_right_rotate(RBTree *t, RBNode *y);
 
+/**
+ * @brief Insert a key into the Red-Black Tree.
+ *
+ * Performs a standard BST insert of a new red node,
+ * then calls rb_tree_insert_fixup to restore R-B properties.
+ * (which is defined as a static void function)
+ *
+ * @param t    Pointer to the RBTree.
+ * @param key  The integer key to insert.
+ */
+void rb_tree_insert(RBTree *t, int key);
+
 #endif // RB_TREE_H

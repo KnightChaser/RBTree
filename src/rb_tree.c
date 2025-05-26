@@ -73,6 +73,8 @@ void rb_tree_left_rotate(RBTree *t, RBNode *x) {
     x->parent = y; // 7) Update x's parent
 }
 
+static void rb_tree_insert_fixup(RBTree *t, RBNode *z);
+
 /**
  * @brief Right-rotate the subtree rooted at y.
  *        It is the mirror operation of left-rotation.
@@ -102,4 +104,115 @@ void rb_tree_right_rotate(RBTree *t, RBNode *y) {
 
     x->right = y;  // 6) Put y on x's right
     y->parent = x; // 7) Update y's parent
+}
+
+/**
+ * @brief Insert a new node into the Red-Black Tree.
+ *         This function doesn't implement the fixup logic,
+ *         which is defined at rb_tree_insert_fixup().
+ *
+ * @param t    The Red-Black Tree.
+ * @param key  The key to insert.
+ */
+void rb_tree_insert(RBTree *t, int key) {
+    // 1) Allocate and initialize the new node z
+    RBNode *z = calloc(1, sizeof(RBNode));
+    if (!z) {
+        return; // Handle allocation failure
+    }
+    z->key = key;
+    z->color = RED; // New nodes are always red initially
+    z->left = t->nil;
+    z->right = t->nil;
+    z->parent = t->nil; // Parent is nil until linked
+
+    // 2) Standard binary search tree insertion: find part y for z
+    RBNode *y = t->nil;
+    RBNode *x = t->root;
+    while (x != t->nil) {
+        y = x;
+        if (z->key < x->key) {
+            // If z's key is less, go left
+            x = x->left;
+        } else {
+            // If z's key is greater or equal, go right
+            x = x->right;
+        }
+    }
+
+    // 3) Link z into the tree
+    z->parent = y;
+    if (y == t->nil) {
+        // tree was empty
+        t->root = z;
+    } else if (z->key < y->key) {
+        // z is a left child
+        y->left = z;
+    } else {
+        // z is a right child
+        y->right = z;
+    }
+
+    // 4) Call fix up and red-black tree property violation
+    rb_tree_insert_fixup(t, z);
+}
+
+/**
+ * @brief Fix up the Red-Black Tree after insertion.
+ *        This function is called after rb_tree_insert().
+ *
+ * @param t  The Red-Black Tree.
+ * @param z  The newly inserted node that may violate properties.
+ */
+static void rb_tree_insert_fixup(RBTree *t, RBNode *z) {
+    RBNode *y;
+    // Continue until z is root or parent is black.
+    // If the parent is black, it means no violation because
+    // the red-black properties are maintained.
+    while (z->parent->color == RED) {
+        if (z->parent == z->parent->parent->left) {
+            y = z->parent->parent->right; // uncle (right)
+            if (y->color == RED) {
+                // Case 1: Uncle is red -> recolor
+                z->parent->color = BLACK;
+                y->color = BLACK;
+                z->parent->parent->color = RED;
+                z = z->parent->parent; // jump to grandparent node
+            } else {
+                if (z == z->parent->right) {
+                    // Case 2: z is right child -> left rotate
+                    // to transform this case into Case 3
+                    z = z->parent;
+                    rb_tree_left_rotate(t, z);
+                }
+                // Case 3: z is left child -> right rotate
+                z->parent->color = BLACK;
+                z->parent->parent->color = RED;
+                rb_tree_right_rotate(t, z->parent->parent);
+            }
+        } else {
+            // Mirror case: z's parent is right child
+            y = z->parent->parent->left; // uncle (left)
+            if (y->color == RED) {
+                // Case 1': Uncle is red -> recolor
+                z->parent->color = BLACK;
+                y->color = BLACK;
+                z->parent->parent->color = RED;
+                z = z->parent->parent; // jump to grandparent node
+            } else {
+                if (z == z->parent->left) {
+                    // Case 2'
+                    z = z->parent;
+                    rb_tree_right_rotate(t, z);
+                }
+                // Case 3'
+                z->parent->color = BLACK;
+                z->parent->parent->color = RED;
+                rb_tree_left_rotate(t, z->parent->parent);
+            }
+        }
+    }
+
+    // Ensure root is always black (Don't forget this! >_<)
+    t->root->color = BLACK;
 }

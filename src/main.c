@@ -12,6 +12,7 @@ static void print_help(void) {
     puts("  insert <key>   — insert a key");
     puts("  delete <key>   — delete a key");
     puts("  print          — in-order dump of the tree");
+    puts("  visualize      — print the tree structure visually");
     puts("  help           — show this message");
     puts("  exit           — quit");
 }
@@ -63,6 +64,10 @@ int main(void) {
             printf("In-order: ");
             inorder_traverse(t, t->root);
             printf("\n");
+        } else if (strcmp(cmd, "visualize") == 0) {
+            printf("Tree structure: (root) --> (left child(below) / right "
+                   "child(above))\n");
+            rb_tree_visualize(t);
 
         } else if (strcmp(cmd, "help") == 0) {
             print_help();

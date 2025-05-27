@@ -15,4 +15,11 @@
  */
 void inorder_traverse(RBTree *t, RBNode *n);
 
+/**
+ * @brief Prints the node's key and color on the terminal, beautifully.
+ *
+ * @param t  The Red-Black Tree.
+ */
+void rb_tree_visualize(RBTree *t);
+
 #endif // AUXILIARY_H

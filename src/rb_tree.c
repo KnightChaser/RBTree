@@ -452,6 +452,28 @@ static void rb_tree_delete_fixup(RBTree *t, RBNode *x) {
 }
 
 /**
+ * @brief Search for a node with the given key in the Red-Black Tree.
+ *
+ * @param t    The Red-Black Tree.
+ * @param key  The key to search for.
+ *
+ * @return Pointer to the found node, or t->nil if not found.
+ */
+RBNode *rb_tree_search(RBTree *t, int key) {
+    RBNode *x = t->root;
+    while (x != t->nil && x->key != key) {
+        if (key < x->key) {
+            // If key is less, go left
+            x = x->left;
+        } else {
+            // If key is greater or equal, go right
+            x = x->right;
+        }
+    }
+    return x;
+}
+
+/**
  * @brief Print a node(RBNode) in the Red-Black Tree.
  *        Used for debugging purposes.
  *

@@ -126,6 +126,16 @@ void rb_tree_insert(RBTree *t, int key);
 void rb_tree_delete(RBTree *t, int key);
 
 /**
+ * @brief Traverse the tree in-order and return the node with the given key.
+ *
+ * @param t  The Red-Black Tree to traverse.
+ * @param n  The current node to start from (usually t->root).
+ *
+ * @return Pointer to the node with the key, or t->nil if not found.
+ */
+RBNode *rb_tree_search(RBTree *t, int key);
+
+/**
  * @brief Print a node’s key and color to stdout.
  *
  * Prints “nil” if the node is the sentinel.

@@ -1,3 +1,4 @@
+// src/main.c
 #include "../include/auxiliary.h"
 #include "../include/rb_tree.h"
 #include <stdio.h>
@@ -47,10 +48,21 @@ int main(void) {
     t->root = t->nil; // clear out dangling root
 
     // 2) Insertion Demo
-    int keys[] = {10, 20, 30, 15, 25, 5};
-    for (size_t i = 0; i < sizeof(keys) / sizeof(*keys); i++) {
+    int keys[] = {10, 20, 30, 15, 25, 5, 40, 100, -5};
+    size_t nk = sizeof(keys) / sizeof(*keys);
+    for (size_t i = 0; i < nk; i++) {
         printf("Insert %d => In-order: ", keys[i]);
         rb_tree_insert(t, keys[i]);
+        inorder_traverse(t, t->root);
+        printf("\n");
+    }
+
+    // 3) Deletion Demo
+    int del_keys[] = {15, 10, 20, 5, 30, 25};
+    size_t nd = sizeof(del_keys) / sizeof(*del_keys);
+    for (size_t i = 0; i < nd; i++) {
+        printf("Delete %d => In-order: ", del_keys[i]);
+        rb_tree_delete(t, del_keys[i]);
         inorder_traverse(t, t->root);
         printf("\n");
     }

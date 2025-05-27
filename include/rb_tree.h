@@ -114,6 +114,18 @@ void rb_tree_right_rotate(RBTree *t, RBNode *y);
 void rb_tree_insert(RBTree *t, int key);
 
 /**
+ * @brief Delete a key from the Red-Black Tree.
+ *
+ * Removes a node with the given key from the tree.
+ * then calls rb_tree_delete_fixup to restore R-B properties.
+ * (which is defined as a static void function)
+ *
+ * @param t   Pointer to the RBTree.
+ * @param key The integer key to delete.
+ */
+void rb_tree_delete(RBTree *t, int key);
+
+/**
  * @brief Print a node’s key and color to stdout.
  *
  * Prints “nil” if the node is the sentinel.

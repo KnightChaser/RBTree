@@ -6,8 +6,9 @@ I tried to sufficiently add annotations within the code... I hope you will be he
 ### Preview
 You'll have an interactive interface to play with a Red-Black Tree with integer key(`int`).
 ![image](https://github.com/user-attachments/assets/fd14fd3f-4a5b-420c-91e5-a818316df3e9)
-My implementation's `visualize` feature shows the tree left to right.
-Except for that, it can print the whole tree! >_<
+
+My implementation's `visualize` feature shows the tree left to right. Except for that, it can print the whole tree! >_<
+
 ![image](https://github.com/user-attachments/assets/a3f0d20e-e9a4-4d99-b2d7-ff0c8e6e19ec)
 
 

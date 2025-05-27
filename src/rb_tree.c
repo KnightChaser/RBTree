@@ -30,14 +30,36 @@ RBTree *rb_tree_create(void) {
 }
 
 /**
+ * @brief Recursively free all nodes in the subtree rooted at n.
+ *
+ * @param t  The Red-Black Tree (for its nil sentinel).
+ * @param n  Current subtree root (skip if nil).
+ */
+static void rb_tree_free_subtree(RBTree *t, RBNode *n) {
+    if (n == t->nil) {
+        return;
+    }
+
+    rb_tree_free_subtree(t, n->left);
+    rb_tree_free_subtree(t, n->right);
+    free(n);
+}
+
+/**
  * @brief Destroy a Red-Black Tree and free its memory.
+ *
+ * 1) Recursively free all real nodes (post-order).
+ * 2) Free the nil sentinel.
+ * 3) Free the tree struct.
+ *
+ * @param t  Pointer to the RBTree to destroy.
  */
 void rb_tree_destroy(RBTree *t) {
     if (!t) {
         return;
     }
 
-    // TODO: traverse from root and free every non-nil node
+    rb_tree_free_subtree(t, t->root);
     free(t->nil);
     free(t);
 }
